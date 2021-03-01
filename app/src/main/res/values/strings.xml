@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AniTime</string>
+    <string name="title_discover">Discover</string>
+    <string name="title_mylist">My List</string>
+    <string name="title_profile">Profile</string>
+    <string name="tab_title_complete">Complete</string>
+    <string name="tab_title_plan_to_watch">Plan to watch</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

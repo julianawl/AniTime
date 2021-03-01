@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.AniTime" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/anime_red</item>
+        <item name="colorPrimaryVariant">@color/anime_back_dark</item>
+        <item name="colorOnPrimary">@color/anime_back</item>
+        <item name="colorPrimaryDark">@color/anime_red_dark</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/anime_back_dark</item>
+    </style>
+</resources>

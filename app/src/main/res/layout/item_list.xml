@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
@@ -25,36 +27,79 @@
             <ImageView
                 android:id="@+id/anime_poster"
                 android:layout_width="85dp"
-                android:layout_height="125dp"
+                android:layout_height="120dp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_action_profile"/>
+                app:srcCompat="@drawable/image_banner" />
 
             <TextView
                 android:id="@+id/anime_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/anime_text"
                 app:layout_constraintBottom_toTopOf="@+id/anime_episodes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/anime_poster"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Animezinho bom" />
+                tools:text="Nome do Anime" />
 
             <TextView
                 android:id="@+id/anime_episodes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/anime_text"
                 app:layout_constraintEnd_toEndOf="@+id/anime_name"
                 app:layout_constraintStart_toStartOf="@+id/anime_name"
                 app:layout_constraintTop_toBottomOf="@+id/anime_name"
+                tools:text="24 episodes" />
+
+            <TextView
+                android:id="@+id/anime_start_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                tools:text="24" />
+                android:textColor="@color/anime_text"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/anime_name"
+                app:layout_constraintStart_toStartOf="@+id/anime_name"
+                app:layout_constraintTop_toBottomOf="@id/anime_episodes"
+                tools:text="Dec 2020" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/anime_score_stars"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:rating="2.35"
+                android:secondaryProgressTint="#616161"
+                android:isIndicator="true"
+                android:progressTint="@color/anime_star_yellow"
+                android:progressBackgroundTint="@color/anime_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/anime_name"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/anime_name"
+                app:layout_constraintTop_toBottomOf="@id/anime_start_date"
+                app:layout_constraintVertical_bias="0.44" />
+
+            <TextView
+                android:id="@+id/anime_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="13sp"
+                android:textColor="@color/anime_text_2"
+                app:layout_constraintStart_toEndOf="@id/anime_score_stars"
+                app:layout_constraintBottom_toBottomOf="@id/anime_score_stars"
+                tools:text="2.35"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

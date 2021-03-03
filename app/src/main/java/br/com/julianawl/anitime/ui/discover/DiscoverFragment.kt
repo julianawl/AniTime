@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.julianawl.anitime.R
+import br.com.julianawl.anitime.model.AnimeDet
+import br.com.julianawl.anitime.model.AnimeDisc
 import br.com.julianawl.anitime.repository.AnimesRepository
+import br.com.julianawl.anitime.ui.AnimeDetailsFragment
 import br.com.julianawl.anitime.ui.adapter.AnimesAdapter
 import kotlinx.android.synthetic.main.fragment_discover.*
 
@@ -57,9 +61,9 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun configuraDiscover() {
-//        adapter?.onItemClickListener = {
-//            goToDetails(it.id)
-//        }
+        adapter?.onItemClickListener = {
+            goToDetails(it)
+        }
         discover_list.adapter = adapter
         discover_list.layoutManager = LinearLayoutManager(context)
     }
@@ -77,7 +81,14 @@ class DiscoverFragment : Fragment() {
         })
     }
 
-    private fun goToDetails(id: Long) {
-        TODO()
+    private fun goToDetails(anime: AnimeDisc){
+
+        val details = AnimeDetailsFragment(anime)
+        val fragmentManager = activity?.supportFragmentManager
+        val transaction = fragmentManager?.beginTransaction()
+        transaction?.replace(R.id.fragment_discover_container, details)
+        transaction?.addToBackStack(null)
+        transaction?.commit()
     }
+
 }

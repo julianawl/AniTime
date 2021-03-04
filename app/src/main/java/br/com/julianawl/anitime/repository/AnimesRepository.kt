@@ -1,14 +1,21 @@
 package br.com.julianawl.anitime.repository
 
+import br.com.julianawl.anitime.database.AnimeDAO
+import br.com.julianawl.anitime.model.AnimeDetails
+import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.retrofit.Api
 import br.com.julianawl.anitime.retrofit.AppRetrofit
 import br.com.julianawl.anitime.retrofit.GetAnimesResponse
-import br.com.julianawl.anitime.retrofit.GetDetailsResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 class AnimesRepository(
-    private val api: Api = AppRetrofit().animeService,
+    private val dao: AnimeDAO,
+    private val api: Api = AppRetrofit().animeService
 ) {
+
+    val allCompleteAnimes: Flow<List<AnimeItem>> = dao.buscaComplete()
+    val allPTWAnimes: Flow<List<AnimeItem>> = dao.buscaPTW()
 
     suspend fun getTopAnimesAiring()
     : Response<GetAnimesResponse>{
@@ -16,9 +23,16 @@ class AnimesRepository(
     }
 
     suspend fun getAnimeDetails(id: Long)
-    : Response<GetDetailsResponse>{
+    : Response<AnimeDetails>{
         return api.getDetails(id)
     }
 
+    suspend fun saveCompleteList(anime: AnimeItem) {
+        dao.saveCompleteList(anime)
+    }
+
+    suspend fun savePTWList(anime: AnimeItem){
+        dao.savePTWList(anime)
+    }
 
 }

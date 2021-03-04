@@ -1,9 +1,8 @@
-package br.com.julianawl.anitime.ui
+package br.com.julianawl.anitime.ui.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.julianawl.anitime.repository.AnimesRepository
-import br.com.julianawl.anitime.ui.discover.DiscoverViewModel
 
 class AnimeDetailsViewModelFactory(
     private val repository: AnimesRepository

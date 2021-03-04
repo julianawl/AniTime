@@ -2,7 +2,7 @@ package br.com.julianawl.anitime.model
 
 import com.google.gson.annotations.SerializedName
 
-data class AnimeDisc(
+data class AnimeItem(
     @SerializedName("mal_id") val id: Long,
     @SerializedName("image_url") val imageUrl: String,
     @SerializedName("title") val title: String,

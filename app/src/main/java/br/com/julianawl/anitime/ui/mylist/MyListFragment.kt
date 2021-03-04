@@ -17,11 +17,6 @@ class MyListFragment : Fragment() {
 
     private lateinit var myListViewModel: MyListViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,

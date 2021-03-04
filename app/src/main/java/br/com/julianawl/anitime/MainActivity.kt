@@ -3,12 +3,8 @@ package br.com.julianawl.anitime
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import br.com.julianawl.anitime.ui.AnimeDetailsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.fragment_anime_details.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         configuraNavController()
+
     }
 
     private fun configuraNavController() {
@@ -24,11 +21,12 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.navigation_discover, R.id.navigation_mylist))
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(R.id.navigation_discover, R.id.navigation_mylist))
+//
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 
 }

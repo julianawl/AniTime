@@ -1,13 +1,13 @@
 package br.com.julianawl.anitime.ui.mylist
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import br.com.julianawl.anitime.model.AnimeItem
+import br.com.julianawl.anitime.repository.AnimesRepository
 
-class MyListViewModel : ViewModel() {
+class MyListViewModel(repository: AnimesRepository ) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is my list Fragment"
-    }
-    val text: LiveData<String> = _text
+    val allComplete: LiveData<List<AnimeItem>> = repository.allCompleteAnimes.asLiveData()
+    val allPTW: LiveData<List<AnimeItem>> = repository.allPTWAnimes.asLiveData()
 }

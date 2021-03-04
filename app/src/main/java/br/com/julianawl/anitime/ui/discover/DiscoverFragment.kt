@@ -6,21 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
-import br.com.julianawl.anitime.model.AnimeDet
-import br.com.julianawl.anitime.model.AnimeDisc
-import br.com.julianawl.anitime.repository.AnimesRepository
-import br.com.julianawl.anitime.ui.AnimeDetailsFragment
+import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.ui.adapter.AnimesAdapter
+import br.com.julianawl.anitime.ui.details.AnimeDetailsFragment
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 
 class DiscoverFragment : Fragment() {
 
-    private lateinit var discoverViewModel: DiscoverViewModel
+    private val viewModel: DiscoverViewModel by viewModels {
+        DiscoverViewModelFactory((activity?.application as MyApplication).repository)
+    }
 
     private val adapter by lazy {
         context?.let {
@@ -30,14 +30,6 @@ class DiscoverFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val repository = AnimesRepository()
-        val viewModelFactory = DiscoverViewModelFactory(repository)
-
-        discoverViewModel = ViewModelProvider(
-            this,
-            viewModelFactory)
-            .get(DiscoverViewModel::class.java)
 
         getAnimes()
     }
@@ -69,8 +61,8 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun getAnimes() {
-        discoverViewModel.getAnimes()
-        discoverViewModel.mResponse.observe(this, {
+        viewModel.getAnimes()
+        viewModel.mResponse.observe(this, {
             if (it.isSuccessful) {
                 it.body()?.let { animes -> adapter?.append(animes.animes)
                     Log.i("getAnimes: ", animes.toString())}
@@ -81,8 +73,7 @@ class DiscoverFragment : Fragment() {
         })
     }
 
-    private fun goToDetails(anime: AnimeDisc){
-
+    private fun goToDetails(anime: AnimeItem){
         val details = AnimeDetailsFragment(anime)
         val fragmentManager = activity?.supportFragmentManager
         val transaction = fragmentManager?.beginTransaction()

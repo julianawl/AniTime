@@ -11,4 +11,11 @@
     <string name="anime_detailes_aired">Aired:</string>
     <string name="anime_details_synopsis">Synopsis:</string>
     <string name="anime_poster">Anime Poster</string>
+    <string name="anitime">AniTime</string>
+    <string name="anitime_slogan">Anime anytime</string>
+    <string name="complete_title">Complete</string>
+    <string name="plan_to_watch_title">Plan to watch</string>
+    <string name="type">Type:</string>
+    <string name="studio">Studio:</string>
+    <string name="add_anime">Add anime</string>
 </resources>

@@ -1,132 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/anime_back_dark"
-    android:fillViewport="true"
-    tools:context=".ui.AnimeDetailsFragment">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview_poster"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/anime_back_dark"
-            app:cardCornerRadius="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_action_back"
+            app:menu="@menu/top_app_bar"
+            app:titleTextColor="@color/anime_text"
+            tools:title="Nome do anime" />
 
-            <ImageView
-                android:id="@+id/anime_details_poster"
-                android:layout_width="187dp"
-                android:layout_height="265dp"
-                android:contentDescription="@string/anime_poster"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/anime_back_dark"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".ui.details.AnimeDetailsFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_poster"
+                android:layout_width="159dp"
+                android:layout_height="225dp"
+                android:backgroundTint="@color/anime_back_dark"
+                app:cardCornerRadius="5dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/anime_details_poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/anime_poster"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/label_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/type"
+                android:textColor="@color/anime_red"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/label_episodes"
+                app:layout_constraintStart_toEndOf="@id/cardview_poster"
                 app:layout_constraintTop_toTopOf="parent" />
-        </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/label_english_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="English title: "
-            android:textColor="@color/anime_red"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/cardview_poster"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/anime_details_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/anime_text_2"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/label_type"
+                app:layout_constraintTop_toTopOf="@id/label_type"
+                tools:text="TV" />
 
-        <TextView
-            android:id="@+id/anime_details_english_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            tools:text="English name"
-            android:textColor="@color/anime_text_2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/label_english_title"
-            app:layout_constraintTop_toTopOf="@id/label_english_title" />
+            <TextView
+                android:id="@+id/label_episodes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/anime_details_episodes"
+                android:textColor="@color/anime_red"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/label_studio"
+                app:layout_constraintStart_toEndOf="@id/cardview_poster"
+                app:layout_constraintTop_toBottomOf="@id/label_type" />
 
+            <TextView
+                android:id="@+id/anime_details_episodes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/anime_text_2"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/label_episodes"
+                app:layout_constraintTop_toTopOf="@id/label_episodes"
+                tools:text="16" />
 
-        <TextView
-            android:id="@+id/label_episodes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/anime_details_episodes"
-            android:textColor="@color/anime_red"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/cardview_poster"
-            app:layout_constraintTop_toBottomOf="@id/label_english_title" />
+            <TextView
+                android:id="@+id/label_studio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/studio"
+                android:textColor="@color/anime_red"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/cardview_poster"
+                app:layout_constraintTop_toBottomOf="@id/label_episodes" />
 
-        <TextView
-            android:id="@+id/anime_details_episodes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/anime_text_2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/label_episodes"
-            app:layout_constraintTop_toTopOf="@id/label_episodes"
-            tools:text="16" />
+            <TextView
+                android:id="@+id/anime_details_studio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/anime_text_2"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_studio"
+                app:layout_constraintTop_toTopOf="@id/label_studio"
+                tools:text="Funimation" />
 
-        <TextView
-            android:id="@+id/label_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/anime_detailes_aired"
-            android:textColor="@color/anime_red"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/cardview_poster"
-            app:layout_constraintTop_toBottomOf="@id/label_episodes" />
+            <TextView
+                android:id="@+id/label_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/anime_detailes_aired"
+                android:textColor="@color/anime_red"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/anime_details_star_score"
+                app:layout_constraintStart_toEndOf="@id/cardview_poster"
+                app:layout_constraintTop_toBottomOf="@id/label_episodes" />
 
-        <TextView
-            android:id="@+id/anime_details_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textColor="@color/anime_text_2"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/label_date"
-            app:layout_constraintTop_toTopOf="@id/label_date"
-            tools:text="Oct 8, 1999 to Mar 31, 2000" />
+            <TextView
+                android:id="@+id/anime_details_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/anime_text_2"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/label_date"
+                app:layout_constraintTop_toTopOf="@id/label_date"
+                tools:text="Oct 8, 1999 to Mar 31, 2000" />
 
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/anime_details_star_score"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressBackgroundTint="@color/anime_text"
+                android:progressTint="@color/anime_star_yellow"
+                android:rating="2.35"
+                android:secondaryProgressTint="#616161"
+                android:stepSize="0.1"
+                app:layout_constraintBottom_toBottomOf="@+id/cardview_poster"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.534"
+                app:layout_constraintStart_toEndOf="@id/cardview_poster" />
 
-        <TextView
-            android:id="@+id/label_synopsis"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/anime_details_synopsis"
-            android:textColor="@color/anime_red"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/anime_details_synopsis"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardview_poster" />
+            <TextView
+                android:id="@+id/label_synopsis"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/anime_details_synopsis"
+                android:textColor="@color/anime_red"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/anime_details_synopsis"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardview_poster" />
 
-        <TextView
-            android:id="@+id/anime_details_synopsis"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="20dp"
-            android:justificationMode="inter_word"
-            android:textColor="@color/anime_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_synopsis"
-            tools:text="@tools:sample/lorem/random" />
+            <TextView
+                android:id="@+id/anime_details_synopsis"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:justificationMode="inter_word"
+                android:textColor="@color/anime_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_synopsis"
+                tools:text="@tools:sample/lorem" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

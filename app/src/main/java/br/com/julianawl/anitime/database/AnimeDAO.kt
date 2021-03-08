@@ -1,10 +1,7 @@
 package br.com.julianawl.anitime.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Query
 import br.com.julianawl.anitime.model.AnimeItem
 import kotlinx.coroutines.flow.Flow
 
@@ -17,7 +14,7 @@ interface AnimeDAO {
     @Delete
     suspend fun deleteComplete(anime: AnimeItem)
 
-    @Query("SELECT * FROM AnimeItem")
+    @Query("SELECT * FROM AnimeItem WHERE status = 1")
     fun buscaComplete(): Flow<List<AnimeItem>>
 
     @Insert(onConflict = REPLACE)
@@ -26,6 +23,6 @@ interface AnimeDAO {
     @Delete
     suspend fun deletePTW(anime: AnimeItem)
 
-    @Query("SELECT * FROM AnimeItem")
+    @Query("SELECT * FROM AnimeItem WHERE status = 2")
     fun buscaPTW(): Flow<List<AnimeItem>>
 }

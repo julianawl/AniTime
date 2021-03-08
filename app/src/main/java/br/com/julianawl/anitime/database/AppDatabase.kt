@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import br.com.julianawl.anitime.database.AnimeMigration.Companion.migration_1_2
 import br.com.julianawl.anitime.model.AnimeItem
+import br.com.julianawl.anitime.database.AnimeMigration.Companion.migration_2_3
+
 
 @Database(entities = [AnimeItem::class], version = 2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
@@ -21,7 +24,7 @@ abstract class AppDatabase: RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "anime-db"
-                ).addMigrations(AnimeMigration().migration_1_2)
+                ).addMigrations(migration_1_2, migration_2_3)
                     .build()
                 INSTANCE = instance
                 instance

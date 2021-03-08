@@ -13,5 +13,7 @@ data class AnimeItem(
     @SerializedName("episodes") val episodes: Int?,
     @SerializedName("start_date") var startDate: String?,
     @SerializedName("end_date") var endDate: String?,
-    @SerializedName("score") val score: Float
+    @SerializedName("score") val score: Float,
+    var status: Int = 0
+//if status = 1 -> Complete, else -> PTW
 )

@@ -28,10 +28,12 @@ class AnimesRepository(
     }
 
     suspend fun saveCompleteList(anime: AnimeItem) {
+        anime.status = 1
         dao.saveCompleteList(anime)
     }
 
     suspend fun savePTWList(anime: AnimeItem){
+        anime.status = 2
         dao.savePTWList(anime)
     }
 

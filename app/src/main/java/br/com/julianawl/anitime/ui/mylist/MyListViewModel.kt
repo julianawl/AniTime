@@ -9,5 +9,6 @@ import br.com.julianawl.anitime.repository.AnimesRepository
 class MyListViewModel(repository: AnimesRepository ) : ViewModel() {
 
     val allComplete: LiveData<List<AnimeItem>> = repository.allCompleteAnimes.asLiveData()
+
     val allPTW: LiveData<List<AnimeItem>> = repository.allPTWAnimes.asLiveData()
 }

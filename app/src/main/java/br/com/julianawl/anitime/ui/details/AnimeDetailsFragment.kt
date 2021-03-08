@@ -104,13 +104,15 @@ class AnimeDetailsFragment(
                             index = which
                             selectItem = lists[which]
                         }
-                        .setPositiveButton("SAVE") { dialog, which ->
+                        .setPositiveButton("SAVE") { dialog, _ ->
                             if (selectItem == lists[0]) {
                                 addAnimeComplete()
+                            } else {
+                                addAnimePTW()
                             }
                             dialog.dismiss()
                         }
-                        .setNeutralButton("CANCEL") { dialog, which ->
+                        .setNeutralButton("CANCEL") { dialog, _ ->
                             dialog.dismiss()
                         }.show()
 

@@ -48,8 +48,11 @@ class AnimesAdapter(
         private val animeEpisodes by lazy {
             itemView.anime_episodes
         }
-        private val animeDate by lazy {
+        private val animeStartDate by lazy {
             itemView.anime_start_date
+        }
+        private val animeEndDate by lazy{
+            itemView.anime_end_date
         }
         private val animePoster by lazy {
             itemView.anime_poster
@@ -73,7 +76,8 @@ class AnimesAdapter(
             this.anime = anime
             animeName.text = anime.title
             episodesFormat(anime.episodes)
-            animeDate.text = anime.startDate
+            animeStartDate.text = anime.startDate
+            animeEndDate.text = anime.endDate
             ratingBarFormat(animeScoreStars,anime.score)
             animeScore.text = anime.score.toString()
             Glide.with(itemView)
@@ -82,9 +86,7 @@ class AnimesAdapter(
                 .into(animePoster)
         }
 
-
-
-        private fun episodesFormat(episodes: Int) {
+        private fun episodesFormat(episodes: Int?) {
             if (episodes == 0) {
                 ("? episodes")
                     .also {

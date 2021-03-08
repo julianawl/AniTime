@@ -31,44 +31,69 @@
                 android:layout_marginEnd="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/image_banner" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/anime_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/anime_text"
                 app:layout_constraintBottom_toTopOf="@+id/anime_episodes"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/anime_poster"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Nome do Anime" />
 
             <TextView
                 android:id="@+id/anime_episodes"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/anime_text"
-                app:layout_constraintEnd_toEndOf="@+id/anime_name"
                 app:layout_constraintStart_toStartOf="@+id/anime_name"
                 app:layout_constraintTop_toBottomOf="@+id/anime_name"
                 tools:text="24 episodes" />
 
             <TextView
                 android:id="@+id/anime_start_date"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:textColor="@color/anime_text"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/anime_name"
                 app:layout_constraintStart_toStartOf="@+id/anime_name"
                 app:layout_constraintTop_toBottomOf="@id/anime_episodes"
                 tools:text="Dec 2020" />
+
+            <TextView
+                android:id="@+id/bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="-"
+                android:textColor="@color/anime_text"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/anime_start_date"
+                app:layout_constraintEnd_toStartOf="@id/anime_end_date"
+                app:layout_constraintStart_toEndOf="@id/anime_start_date"
+                app:layout_constraintTop_toBottomOf="@id/anime_episodes" />
+
+            <TextView
+                android:id="@+id/anime_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/anime_text"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/bar"
+                app:layout_constraintTop_toBottomOf="@id/anime_episodes"
+                tools:text="Dec 2021" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/anime_score_stars"

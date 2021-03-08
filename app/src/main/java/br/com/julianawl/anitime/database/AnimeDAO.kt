@@ -17,7 +17,7 @@ interface AnimeDAO {
     @Delete
     suspend fun deleteComplete(anime: AnimeItem)
 
-    @Query("SELECT * FROM Anime")
+    @Query("SELECT * FROM AnimeItem")
     fun buscaComplete(): Flow<List<AnimeItem>>
 
     @Insert(onConflict = REPLACE)
@@ -26,6 +26,6 @@ interface AnimeDAO {
     @Delete
     suspend fun deletePTW(anime: AnimeItem)
 
-    @Query("SELECT * FROM Anime")
+    @Query("SELECT * FROM AnimeItem")
     fun buscaPTW(): Flow<List<AnimeItem>>
 }

@@ -28,7 +28,6 @@ class CompleteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         getAnimes()
     }
 
@@ -55,7 +54,7 @@ class CompleteFragment : Fragment() {
     }
 
     private fun getAnimes() {
-        viewModel.allComplete.observe(viewLifecycleOwner,{
+        viewModel.allComplete.observe(this,{
             it?.let {
                 adapter?.append(it)
             }

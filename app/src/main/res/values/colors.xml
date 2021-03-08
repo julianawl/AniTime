@@ -7,11 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="anime_red">#AC2222</color>
+    <color name="anime_red">#981313</color>
     <color name="anime_back">#343239</color>
     <color name="anime_back_dark">#2B2930</color>
     <color name="anime_text">#eadfe8</color>
     <color name="anime_text_2">#A1A1A1</color>
-    <color name="anime_red_dark">#851616</color>
+    <color name="anime_red_dark">#760000</color>
     <color name="anime_star_yellow">#ffe400</color>
 </resources>

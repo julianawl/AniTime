@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabBackground="@color/anime_red"
-            app:tabTextColor="@color/anime_text_2"
+            app:tabTextColor="#570000"
             app:tabSelectedTextColor="@color/anime_text"
             app:tabIndicatorColor="@color/anime_text"
             app:tabMode="fixed">

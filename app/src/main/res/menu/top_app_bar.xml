@@ -6,6 +6,6 @@
         android:icon="@drawable/ic_action_add_list"
         android:title="@string/add_anime"
         android:contentDescription="@string/add_anime"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "Anime")
+@Entity(tableName = "AnimeDetails")
 data class AnimeDetails(
     @PrimaryKey(autoGenerate = false)
     @SerializedName("mal_id") val id: Long,

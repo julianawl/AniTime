@@ -65,7 +65,7 @@ class DiscoverFragment : Fragment() {
         viewModel.mResponse.observe(this, {
             if (it.isSuccessful) {
                 it.body()?.let { animes -> adapter?.append(animes.animes)
-                    Log.i("getAnimes: ", animes.toString())}
+                    Log.i("getAnimes: ", animes.toString()) }
 
             } else {
                 Log.i("Response", it.errorBody().toString())

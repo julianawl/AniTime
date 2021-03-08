@@ -13,6 +13,7 @@ import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.ui.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_anime_details.*
 import retrofit2.Response
 
@@ -23,6 +24,9 @@ class AnimeDetailsFragment(
     private val viewModel: AnimeDetailsViewModel by viewModels {
         AnimeDetailsViewModelFactory((activity?.application as MyApplication).repository)
     }
+
+    var index = 0
+    private val lists = arrayOf("Complete", "Plan to watch")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,23 +91,31 @@ class AnimeDetailsFragment(
     }
 
     private fun navigationAppBar(){
-//        topAppBar.setNavigationOnClickListener {
-//
-//        }
+        topAppBar.setNavigationOnClickListener {
+
+        }
         topAppBar.setOnMenuItemClickListener {
             when(it.itemId){
-                R.id.add_anime ->{
-                    when(it.itemId){
-                        R.id.add_list_complete ->{
-                            addAnimeComplete()
-                            true
+                R.id.add_anime -> {
+                    var selectItem = lists[index]
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.add_anime)
+                        .setSingleChoiceItems(lists, index) { _, which ->
+                            index = which
+                            selectItem = lists[which]
                         }
-                        R.id.add_list_ptw ->{
-                            addAnimePTW()
-                            true
+                        .setPositiveButton("SAVE") { dialog, which ->
+                            if (selectItem == lists[0]) {
+                                addAnimeComplete()
+                            }
+                            dialog.dismiss()
                         }
-                        else -> false
-                    }
+                        .setNeutralButton("CANCEL") { dialog, which ->
+                            dialog.dismiss()
+                        }.show()
+
+
+                    true
                 }
                 else -> false
             }

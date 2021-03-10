@@ -1,5 +1,6 @@
 package br.com.julianawl.anitime.ui.mylist.tabs
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,7 @@ class CompleteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getAnimes()
+        getCompleteList()
     }
 
     override fun onCreateView(
@@ -53,7 +54,7 @@ class CompleteFragment : Fragment() {
         list_complete.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun getAnimes() {
+    private fun getCompleteList() {
         viewModel.allComplete.observe(this,{
             it?.let {
                 adapter?.append(it)

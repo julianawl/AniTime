@@ -3,7 +3,7 @@ package br.com.julianawl.anitime.database
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-class AnimeMigration() {
+class AnimeMigration {
     companion object{
         val migration_1_2 = object: Migration(1,2){
             override fun migrate(database: SupportSQLiteDatabase) {
@@ -27,9 +27,6 @@ class AnimeMigration() {
                 database.execSQL("ALTER TABLE AnimeItem ADD COLUMN status INTEGER")
             }
         }
+
     }
-
-
-
-
 }

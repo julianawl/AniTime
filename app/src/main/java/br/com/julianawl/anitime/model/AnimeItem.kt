@@ -15,5 +15,4 @@ data class AnimeItem(
     @SerializedName("end_date") var endDate: String?,
     @SerializedName("score") val score: Float,
     var status: Int = 0
-//if status = 1 -> Complete, else -> PTW
 )

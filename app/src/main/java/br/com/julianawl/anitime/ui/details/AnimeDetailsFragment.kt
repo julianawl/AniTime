@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavArgument
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeDetails
@@ -13,16 +17,17 @@ import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.ui.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_anime_details.*
+import kotlinx.android.synthetic.main.fragment_discover.*
 import retrofit2.Response
 
-class AnimeDetailsFragment(
-    private val anime: AnimeItem
-) : Fragment() {
+class AnimeDetailsFragment(val anime: AnimeItem) : Fragment() {
 
     private val viewModel: AnimeDetailsViewModel by viewModels {
-        AnimeDetailsViewModelFactory((activity?.application as MyApplication).repository)
+        AnimeDetailsViewModelFactory((activity?.application
+                as MyApplication).repository)
     }
 
     var index = 0
@@ -92,7 +97,7 @@ class AnimeDetailsFragment(
 
     private fun navigationAppBar(){
         topAppBar.setNavigationOnClickListener {
-
+            
         }
         topAppBar.setOnMenuItemClickListener {
             when(it.itemId){
@@ -115,8 +120,6 @@ class AnimeDetailsFragment(
                         .setNeutralButton("CANCEL") { dialog, _ ->
                             dialog.dismiss()
                         }.show()
-
-
                     true
                 }
                 else -> false

@@ -87,7 +87,7 @@ class AnimesAdapter(
         }
 
         private fun episodesFormat(episodes: Int?) {
-            if (episodes == 0) {
+            if (episodes == null) {
                 ("? episodes")
                     .also {
                         animeEpisodes.text = it

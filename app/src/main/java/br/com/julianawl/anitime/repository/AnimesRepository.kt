@@ -6,6 +6,7 @@ import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.retrofit.Api
 import br.com.julianawl.anitime.retrofit.AppRetrofit
 import br.com.julianawl.anitime.retrofit.GetAnimesResponse
+import br.com.julianawl.anitime.retrofit.GetSearchResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
@@ -35,6 +36,19 @@ class AnimesRepository(
     suspend fun savePTWList(anime: AnimeItem){
         anime.status = 2
         dao.savePTWList(anime)
+    }
+
+    suspend fun getAnimesSearch(keyword: String)
+    : Response<GetSearchResponse>{
+        return api.getAnimesSearch(keyword)
+    }
+
+    suspend fun deleteCompleteList(anime: AnimeItem){
+        dao.deleteComplete(anime)
+    }
+
+    suspend fun deletePTWList(anime: AnimeItem){
+        dao.deletePTW(anime)
     }
 
 }

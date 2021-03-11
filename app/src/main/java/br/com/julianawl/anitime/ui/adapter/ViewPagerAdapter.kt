@@ -2,11 +2,12 @@ package br.com.julianawl.anitime.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class ViewPagerAdapter(supportFragmentManager: FragmentManager)
-    : FragmentStatePagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+//adapter do tablayout
+class ViewPagerAdapter(supportFragmentManager: FragmentManager) :
+    FragmentStatePagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val mFragmentList = ArrayList<Fragment>()
     private val mFragTitleList = ArrayList<String>()
@@ -22,7 +23,8 @@ class ViewPagerAdapter(supportFragmentManager: FragmentManager)
     override fun getPageTitle(position: Int): CharSequence {
         return mFragTitleList[position]
     }
-    fun addFragment(fragment: Fragment, title: String){
+
+    fun addFragment(fragment: Fragment, title: String) {
         mFragmentList.add(fragment)
         mFragTitleList.add(title)
     }

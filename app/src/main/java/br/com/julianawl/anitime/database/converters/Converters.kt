@@ -1,4 +1,4 @@
-package br.com.julianawl.anitime.database
+package br.com.julianawl.anitime.database.converters
 
 import androidx.room.TypeConverter
 import br.com.julianawl.anitime.model.Studios
@@ -11,10 +11,10 @@ class Converters {
     @TypeConverter
     fun studiosToJson(studios: List<Studios>?) = Gson().toJson(studios)
 
-    inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
+    inline fun <reified T> genericType() = object : TypeToken<T>() {}.type
 
     @TypeConverter
-    fun jsonToStudios(json: String): List<Char>{
+    fun jsonToStudios(json: String): List<Char> {
         val type = genericType<List<Studios>>()
         return Gson().toJson(json, type).toList()
     }

@@ -5,15 +5,17 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+//classe que pega as informações básicas dos animes dispostas em listas
+
 @Entity(tableName = "AnimeItem")
 data class AnimeItem(
     @PrimaryKey(autoGenerate = false)
     @SerializedName("mal_id") val id: Long,
     @SerializedName("image_url") val imageUrl: String,
-    @SerializedName("title") val title: String,
-    @SerializedName("episodes") val episodes: Int?,
+    val title: String,
+    val episodes: Int?,
     @SerializedName("start_date") var startDate: String?,
     @SerializedName("end_date") var endDate: String?,
-    @SerializedName("score") val score: Float,
+    val score: Float,
     var status: Int = 0
 ) : Serializable

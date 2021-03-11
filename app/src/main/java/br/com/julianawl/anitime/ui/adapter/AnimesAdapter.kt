@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeItem
-import br.com.julianawl.anitime.ui.ratingBarFormat
+import br.com.julianawl.anitime.ui.adapter.extensions.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import kotlinx.android.synthetic.main.item_list.view.*
 
+//adapter dos recyclerviews
 class AnimesAdapter(
     private val context: Context,
     private val animes: MutableList<AnimeItem> = mutableListOf(),
@@ -41,6 +42,7 @@ class AnimesAdapter(
         notifyDataSetChanged()
     }
 
+
     inner class AnimeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var anime: AnimeItem
         private val animeName by lazy {
@@ -52,7 +54,7 @@ class AnimesAdapter(
         private val animeStartDate by lazy {
             itemView.anime_start_date
         }
-        private val animeEndDate by lazy{
+        private val animeEndDate by lazy {
             itemView.anime_end_date
         }
         private val animePoster by lazy {
@@ -79,7 +81,7 @@ class AnimesAdapter(
             episodesFormat(anime.episodes)
             animeStartDate.text = anime.startDate
             animeEndDate.text = anime.endDate
-            ratingBarFormat(animeScoreStars,anime.score)
+            ratingBarFormat(animeScoreStars, anime.score)
             animeScore.text = anime.score.toString()
             Glide.with(itemView)
                 .load(anime.imageUrl)
@@ -107,8 +109,6 @@ class AnimesAdapter(
                 }
             }
         }
-
-
     }
 
 }

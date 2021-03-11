@@ -87,8 +87,8 @@
                 android:id="@+id/anime_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/anime_text"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@id/bar"
@@ -100,13 +100,13 @@
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
+                android:isIndicator="true"
                 android:numStars="5"
-                android:stepSize="0.1"
+                android:progressBackgroundTint="@color/anime_text"
+                android:progressTint="@color/anime_star_yellow"
                 android:rating="2.35"
                 android:secondaryProgressTint="#616161"
-                android:isIndicator="true"
-                android:progressTint="@color/anime_star_yellow"
-                android:progressBackgroundTint="@color/anime_text"
+                android:stepSize="0.1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/anime_name"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -119,17 +119,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="13sp"
                 android:textColor="@color/anime_text_2"
-                app:layout_constraintStart_toEndOf="@id/anime_score_stars"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@id/anime_score_stars"
-                tools:text="2.35"
-                />
+                app:layout_constraintStart_toEndOf="@id/anime_score_stars"
+                tools:text="2.35" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,19 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import br.com.julianawl.anitime.database.AnimeMigration.Companion.migration_1_2
-import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.database.AnimeMigration.Companion.migration_2_3
+import br.com.julianawl.anitime.database.dao.AnimeDAO
+import br.com.julianawl.anitime.model.AnimeItem
 
 
 @Database(entities = [AnimeItem::class], version = 3, exportSchema = false)
 //@TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun animeDAO(): AnimeDAO
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 

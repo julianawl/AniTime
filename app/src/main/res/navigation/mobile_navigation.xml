@@ -9,7 +9,7 @@
         android:id="@+id/navigation_discover"
         android:name="br.com.julianawl.anitime.ui.discover.DiscoverFragment"
         android:label="@string/title_discover"
-        tools:layout="@layout/fragment_discover" >
+        tools:layout="@layout/fragment_discover">
         <action
             android:id="@+id/action_navigation_discover_to_details"
             app:destination="@id/navigation_details" />
@@ -20,11 +20,12 @@
         android:name="br.com.julianawl.anitime.ui.mylist.MyListFragment"
         android:label="@string/title_mylist"
         tools:layout="@layout/fragment_mylist" />
+
     <fragment
         android:id="@+id/navigation_details"
+        android:name="br.com.julianawl.anitime.ui.details.AnimeDetailsFragment"
         android:label="Anime details"
-        tools:layout="@layout/fragment_anime_details"
-        android:name="br.com.julianawl.anitime.ui.details.AnimeDetailsFragment" >
+        tools:layout="@layout/fragment_anime_details">
         <action
             android:id="@+id/action_navigation_details_to_navigation_discover"
             app:destination="@id/navigation_discover" />

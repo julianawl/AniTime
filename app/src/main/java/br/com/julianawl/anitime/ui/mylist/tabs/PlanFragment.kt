@@ -1,10 +1,10 @@
 package br.com.julianawl.anitime.ui.mylist.tabs
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.julianawl.anitime.MyApplication
@@ -12,9 +12,9 @@ import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.ui.adapter.AnimesAdapter
 import br.com.julianawl.anitime.ui.mylist.MyListViewModel
 import br.com.julianawl.anitime.ui.mylist.MyListViewModelFactory
-import kotlinx.android.synthetic.main.fragment_complete.*
 import kotlinx.android.synthetic.main.fragment_plan.*
 
+//item do tablayout
 class PlanFragment : Fragment() {
 
     private val viewModel: MyListViewModel by viewModels {
@@ -49,17 +49,18 @@ class PlanFragment : Fragment() {
         configuraPlan()
     }
 
+    //configura a lista com os animes que planeja assistir
     private fun configuraPlan() {
         list_plan.adapter = adapter
         list_plan.layoutManager = LinearLayoutManager(context)
     }
 
+    //pega os items da lista salvos internamente
     private fun getAnimes() {
-        viewModel.allPTW.observe(this,{
+        viewModel.allPTW.observe(this, {
             it?.let {
                 adapter?.append(it)
             }
         })
     }
-
 }

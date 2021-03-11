@@ -19,6 +19,7 @@
         <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
 
     </style>
+
     <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
         <!-- cor do texto digitado -->
         <item name="android:textColorPrimary">@color/anime_search_white</item>
@@ -28,6 +29,7 @@
         <item name="android:textColorSecondary">@color/anime_search_white</item>
         <item name="colorControlActivated">@color/anime_search_white</item>
     </style>
+
     <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="titleTextStyle">?attr/textAppearanceHeadline6</item>
         <item name="subtitleTextStyle">?attr/textAppearanceSubtitle1</item>

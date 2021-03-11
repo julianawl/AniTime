@@ -5,6 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//instância do retrofit
 private const val BASE_URL = "https://api.jikan.moe/v3/"
 
 class AppRetrofit {

@@ -1,6 +1,5 @@
 package br.com.julianawl.anitime.ui.mylist.tabs
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import br.com.julianawl.anitime.ui.mylist.MyListViewModel
 import br.com.julianawl.anitime.ui.mylist.MyListViewModelFactory
 import kotlinx.android.synthetic.main.fragment_complete.*
 
+//item do tablayout
 class CompleteFragment : Fragment() {
 
     private val viewModel: MyListViewModel by viewModels {
@@ -49,13 +49,15 @@ class CompleteFragment : Fragment() {
         configuraComplete()
     }
 
+    //configura a lista dos animes completos
     private fun configuraComplete() {
         list_complete.adapter = adapter
         list_complete.layoutManager = LinearLayoutManager(context)
     }
 
+    //pega os animes da lista salvos localmente
     private fun getCompleteList() {
-        viewModel.allComplete.observe(this,{
+        viewModel.allComplete.observe(this, {
             it?.let {
                 adapter?.append(it)
             }

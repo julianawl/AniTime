@@ -4,42 +4,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavArgument
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeDetails
-import br.com.julianawl.anitime.model.AnimeItem
-import br.com.julianawl.anitime.ui.ratingBarFormat
+import br.com.julianawl.anitime.ui.adapter.extensions.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_anime_details.*
-import kotlinx.android.synthetic.main.fragment_discover.*
 import retrofit2.Response
 
-class AnimeDetailsFragment() : Fragment() {
+class AnimeDetailsFragment : Fragment() {
 
-    private val viewModel: AnimeDetailsViewModel by viewModels {
-        AnimeDetailsViewModelFactory((activity?.application
-                as MyApplication).repository)
-    }
+    var index = 0
+    private val lists = arrayOf("Complete", "Plan to watch")
 
     private val argument by navArgs<AnimeDetailsFragmentArgs>()
+
     private val anime by lazy {
         argument.anime
     }
 
-    var index = 0
-    private val lists = arrayOf("Complete", "Plan to watch")
+    private val viewModel: AnimeDetailsViewModel by viewModels {
+        AnimeDetailsViewModelFactory(
+            (activity?.application
+                    as MyApplication).repository
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,15 +53,12 @@ class AnimeDetailsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configuraDetails()
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
-        val navHostFragment = NavHostFragment.findNavController(this)
-        NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
-        navigationAppBar()
+        configuraAppBar(view)
+        configuraDetails()
     }
 
-
+    //configura as informações que aparecerão na tela
     private fun configuraDetails() {
         viewModel.getDetails(anime.id)
         viewModel.mResponse.observe(viewLifecycleOwner, {
@@ -82,7 +76,7 @@ class AnimeDetailsFragment() : Fragment() {
         })
     }
 
-    private fun configuraStudio(animeDetails: Response<AnimeDetails>){
+    private fun configuraStudio(animeDetails: Response<AnimeDetails>) {
         anime_details_studio.text = animeDetails.body()?.let { response ->
             response.studio.let { studioList ->
                 if (studioList.isEmpty()) {
@@ -106,33 +100,44 @@ class AnimeDetailsFragment() : Fragment() {
             .into(anime_details_poster)
     }
 
-    private fun navigationAppBar(){
+    //configura as ações presentes na toolbar
+    private fun configuraAppBar(view: View) {
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment)
+
         topAppBar.setOnMenuItemClickListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.add_anime -> {
-                    var selectItem = lists[index]
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(R.string.add_anime)
-                        .setSingleChoiceItems(lists, index) { _, which ->
-                            index = which
-                            selectItem = lists[which]
-                        }
-                        .setPositiveButton("SAVE") { dialog, _ ->
-                            if (selectItem == lists[0]) {
-                                addAnimeComplete()
-                            } else {
-                                addAnimePTW()
-                            }
-                            dialog.dismiss()
-                        }
-                        .setNeutralButton("CANCEL") { dialog, _ ->
-                            dialog.dismiss()
-                        }.show()
+                    configuraDialogAddAnime()
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    //configura dialog de adição do anime em uma lista
+    private fun configuraDialogAddAnime() {
+        var selectItem = lists[index]
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.add_anime)
+            .setSingleChoiceItems(lists, index) { _, which ->
+                index = which
+                selectItem = lists[which]
+            }
+            .setPositiveButton("SAVE") { dialog, _ ->
+                if (selectItem == lists[0]) {
+                    addAnimeComplete()
+                } else {
+                    addAnimePTW()
+                }
+                dialog.dismiss()
+            }
+            .setNeutralButton("CANCEL") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
     }
 
     private fun addAnimePTW() {
@@ -144,7 +149,4 @@ class AnimeDetailsFragment() : Fragment() {
         //verificar se anime já está na lista ou se está na outra lista
         viewModel.saveCompleteList(anime)
     }
-
-
-
 }

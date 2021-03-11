@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -20,10 +19,8 @@ import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.ui.adapter.AnimesAdapter
-import br.com.julianawl.anitime.ui.details.AnimeDetailsFragment
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.android.synthetic.main.fragment_discover.*
-
 
 class DiscoverFragment : Fragment() {
 
@@ -37,7 +34,7 @@ class DiscoverFragment : Fragment() {
         }
     }
 
-    private val controller by lazy{
+    private val controller by lazy {
         findNavController()
     }
 
@@ -61,25 +58,31 @@ class DiscoverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         configuraAppBar(view)
         configuraDiscover()
     }
 
+    //configura a toolbar com as ações
     private fun configuraAppBar(view: View) {
         val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBarDisc)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_discover))
         val navHostFragment = NavHostFragment.findNavController(this)
+
         NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
         setHasOptionsMenu(true)
+
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigateUp()
         }
     }
 
+    //configura a função de pesquisa na appbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.top_app_bar_discover, menu)
+
         val searchManager = activity?.getSystemService(SEARCH_SERVICE) as SearchManager
         val searchView: SearchView = menu.findItem(R.id.search_anime).actionView as SearchView
         val searchMenuItem = menu.findItem(R.id.search_anime)
@@ -88,38 +91,32 @@ class DiscoverFragment : Fragment() {
         searchView.queryHint = "Search an anime..."
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query?.length!! > 3) {
-                    viewModel.getSearch(query)
-                    viewModel.mSearchResponse.observe(this@DiscoverFragment, {
-                        if(it.isSuccessful){
-                            it.body()?.let {
-                                    result ->
-                                adapter?.append(result.results)
-                            }
-                        }
-                    })
-
-                }
+                configuraSearch(query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                viewModel.getSearch(newText)
-                viewModel.mSearchResponse.observe(this@DiscoverFragment, {
-                    if(it.isSuccessful){
-                        it.body()?.let {
-                            result ->
-                            adapter?.append(result.results)
-                        }
-                    }
-                })
+                configuraSearch(newText)
                 return true
             }
-
         })
         searchMenuItem.icon.setVisible(false, false)
     }
 
+    private fun configuraSearch(query: String?) {
+        if (query?.length!! > 3) {
+            viewModel.getSearch(query)
+            viewModel.mSearchResponse.observe(this@DiscoverFragment, {
+                if (it.isSuccessful) {
+                    it.body()?.let { result ->
+                        adapter?.append(result.results)
+                    }
+                }
+            })
+        }
+    }
+
+    //define o adapter e a ação quando clica no anime
     private fun configuraDiscover() {
         adapter?.onItemClickListener = {
             goToDetails(it)
@@ -128,6 +125,7 @@ class DiscoverFragment : Fragment() {
         discover_list.layoutManager = LinearLayoutManager(context)
     }
 
+    //chama os animes da lista discover
     private fun getAnimes() {
         viewModel.getAnimes()
         viewModel.mResponse.observe(this, {
@@ -137,12 +135,14 @@ class DiscoverFragment : Fragment() {
                 }
 
             } else {
+                //definir ação para erro
                 Log.i("Response", it.errorBody().toString())
             }
         })
     }
 
-    private fun goToDetails(anime: AnimeItem){
+    //vai para os detalhes quando clica em um anime
+    private fun goToDetails(anime: AnimeItem) {
         val direction = DiscoverFragmentDirections
             .actionNavigationDiscoverToDetails(anime)
         controller.navigate(direction)

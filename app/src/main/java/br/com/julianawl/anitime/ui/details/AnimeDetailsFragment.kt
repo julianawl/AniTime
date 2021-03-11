@@ -8,8 +8,10 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavArgument
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeDetails
@@ -18,16 +20,22 @@ import br.com.julianawl.anitime.ui.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_anime_details.*
 import kotlinx.android.synthetic.main.fragment_discover.*
 import retrofit2.Response
 
-class AnimeDetailsFragment(val anime: AnimeItem) : Fragment() {
+class AnimeDetailsFragment() : Fragment() {
 
     private val viewModel: AnimeDetailsViewModel by viewModels {
         AnimeDetailsViewModelFactory((activity?.application
                 as MyApplication).repository)
+    }
+
+    private val argument by navArgs<AnimeDetailsFragmentArgs>()
+    private val anime by lazy {
+        argument.anime
     }
 
     var index = 0
@@ -48,8 +56,11 @@ class AnimeDetailsFragment(val anime: AnimeItem) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         configuraDetails()
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment)
+
         navigationAppBar()
     }
 
@@ -96,9 +107,6 @@ class AnimeDetailsFragment(val anime: AnimeItem) : Fragment() {
     }
 
     private fun navigationAppBar(){
-        topAppBar.setNavigationOnClickListener {
-            
-        }
         topAppBar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.add_anime -> {
@@ -128,10 +136,12 @@ class AnimeDetailsFragment(val anime: AnimeItem) : Fragment() {
     }
 
     private fun addAnimePTW() {
+        //verificar se anime já está na lista ou se está na outra lista
         viewModel.savePTWList(anime)
     }
 
     private fun addAnimeComplete() {
+        //verificar se anime já está na lista ou se está na outra lista
         viewModel.saveCompleteList(anime)
     }
 

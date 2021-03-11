@@ -29,8 +29,8 @@
             android:id="@+id/action_navigation_details_to_navigation_discover"
             app:destination="@id/navigation_discover" />
         <argument
-            android:name="animeId"
-            app:argType="long" />
+            android:name="anime"
+            app:argType="br.com.julianawl.anitime.model.AnimeItem" />
     </fragment>
 
 </navigation>

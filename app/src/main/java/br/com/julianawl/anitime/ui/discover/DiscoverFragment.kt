@@ -37,6 +37,10 @@ class DiscoverFragment : Fragment() {
         }
     }
 
+    private val controller by lazy{
+        findNavController()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,16 +61,20 @@ class DiscoverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBarDisc)
-//        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_discover))
-//        val navHostFragment = NavHostFragment.findNavController(this)
-//        NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
-//        setHasOptionsMenu(true)
-//        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-//        toolbar.setNavigationOnClickListener { view ->
-//            view.findNavController().navigateUp()
-//        }
+        configuraAppBar(view)
         configuraDiscover()
+    }
+
+    private fun configuraAppBar(view: View) {
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBarDisc)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_discover))
+        val navHostFragment = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener { view ->
+            view.findNavController().navigateUp()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -77,7 +85,7 @@ class DiscoverFragment : Fragment() {
         val searchMenuItem = menu.findItem(R.id.search_anime)
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-        searchView.queryHint = "Search an Anime..."
+        searchView.queryHint = "Search an anime..."
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.length!! > 3) {
@@ -86,9 +94,7 @@ class DiscoverFragment : Fragment() {
                         if(it.isSuccessful){
                             it.body()?.let {
                                     result ->
-
                                 adapter?.append(result.results)
-                                Log.i("SEARCH", result.results.toString())
                             }
                         }
                     })
@@ -102,7 +108,8 @@ class DiscoverFragment : Fragment() {
                 viewModel.mSearchResponse.observe(this@DiscoverFragment, {
                     if(it.isSuccessful){
                         it.body()?.let {
-                            result -> adapter?.append(result.results)
+                            result ->
+                            adapter?.append(result.results)
                         }
                     }
                 })
@@ -125,7 +132,9 @@ class DiscoverFragment : Fragment() {
         viewModel.getAnimes()
         viewModel.mResponse.observe(this, {
             if (it.isSuccessful) {
-                it.body()?.let { animes -> adapter?.append(animes.animes) }
+                it.body()?.let { animes ->
+                    adapter?.append(animes.animes)
+                }
 
             } else {
                 Log.i("Response", it.errorBody().toString())
@@ -134,12 +143,9 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun goToDetails(anime: AnimeItem){
-        val details = AnimeDetailsFragment(anime)
-        val fragmentManager = activity?.supportFragmentManager
-        val transaction = fragmentManager?.beginTransaction()
-        transaction?.replace(R.id.fragment_discover_container, details)
-        transaction?.addToBackStack(null)
-        transaction?.commit()
+        val direction = DiscoverFragmentDirections
+            .actionNavigationDiscoverToDetails(anime)
+        controller.navigate(direction)
     }
 
 }

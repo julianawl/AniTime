@@ -36,6 +36,7 @@ class AnimesAdapter(
     override fun getItemCount(): Int = animes.size
 
     fun append(animes: List<AnimeItem>) {
+        this.animes.clear()
         this.animes.addAll(animes)
         notifyDataSetChanged()
     }

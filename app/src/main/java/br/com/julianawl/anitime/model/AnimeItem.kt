@@ -3,6 +3,7 @@ package br.com.julianawl.anitime.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "AnimeItem")
 data class AnimeItem(
@@ -15,4 +16,4 @@ data class AnimeItem(
     @SerializedName("end_date") var endDate: String?,
     @SerializedName("score") val score: Float,
     var status: Int = 0
-)
+) : Serializable

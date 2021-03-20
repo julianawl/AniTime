@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeItem
+import br.com.julianawl.anitime.ui.LoadingDialog
 import br.com.julianawl.anitime.ui.adapter.AnimesAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 class DiscoverFragment : Fragment() {
+
+    private val loadingDialog = LoadingDialog()
 
     private val viewModel: DiscoverViewModel by viewModels {
         DiscoverViewModelFactory((activity?.application as MyApplication).repository)
@@ -40,7 +43,6 @@ class DiscoverFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         getAnimes()
     }
 
@@ -127,11 +129,13 @@ class DiscoverFragment : Fragment() {
 
     //chama os animes da lista discover
     private fun getAnimes() {
+        loadingDialog.show(requireContext())
         viewModel.getAnimes()
         viewModel.mResponse.observe(this, {
             if (it.isSuccessful) {
                 it.body()?.let { animes ->
                     adapter?.append(animes.animes)
+                    loadingDialog.dismissDialog()
                 }
 
             } else {

@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import br.com.julianawl.anitime.MyApplication
@@ -130,9 +132,16 @@ class AnimeDetailsFragment : Fragment() {
             .setPositiveButton("SAVE") { dialog, _ ->
                 if (selectItem == lists[0]) {
                     addAnimeComplete()
+                    Toast.makeText(requireContext(),
+                        "Anime added in complete list successfully",
+                        Toast.LENGTH_SHORT).show()
                 } else {
                     addAnimePTW()
+                    Toast.makeText(requireContext(),
+                        "Anime added in plan to watch list successfully",
+                        Toast.LENGTH_SHORT).show()
                 }
+                findNavController().navigate(R.id.navigation_discover)
                 dialog.dismiss()
             }
             .setNeutralButton("CANCEL") { dialog, _ ->

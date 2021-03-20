@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="anime_red">#981313</color>
+    <color name="anime_red">#970E0E</color>
     <color name="anime_red_dark">#760000</color>
     <color name="anime_red_darker">#570000</color>
     <color name="black">#FF000000</color>
-    <color name="anime_back_dark">#2B2930</color>
-    <color name="anime_back">#343239</color>
+    <color name="anime_black_dark">#2B2930</color>
+    <color name="anime_black">#343239</color>
     <color name="white">#FFFFFFFF</color>
     <color name="anime_text">#eadfe8</color>
     <color name="anime_text_2">#A1A1A1</color>

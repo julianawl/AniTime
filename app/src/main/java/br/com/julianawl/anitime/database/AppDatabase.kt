@@ -11,7 +11,7 @@ import br.com.julianawl.anitime.model.AnimeItem
 
 
 @Database(entities = [AnimeItem::class], version = 3, exportSchema = false)
-//@TypeConverters(Converters::class)
+
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun animeDAO(): AnimeDAO

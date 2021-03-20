@@ -10,7 +10,7 @@ import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.ui.adapter.extensions.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import kotlinx.android.synthetic.main.item_list.view.*
+import kotlinx.android.synthetic.main.item_list_discover.view.*
 
 //adapter dos recyclerviews
 class AnimesAdapter(
@@ -26,7 +26,7 @@ class AnimesAdapter(
     ): AnimeViewHolder {
         val view = LayoutInflater
             .from(context)
-            .inflate(R.layout.item_list, parent, false)
+            .inflate(R.layout.item_list_discover, parent, false)
         return AnimeViewHolder(view)
     }
 
@@ -69,7 +69,7 @@ class AnimesAdapter(
 
         init {
             itemView.setOnClickListener {
-                if (::anime.isInitialized) {
+                if(::anime.isInitialized){
                     onItemClickListener(anime)
                 }
             }

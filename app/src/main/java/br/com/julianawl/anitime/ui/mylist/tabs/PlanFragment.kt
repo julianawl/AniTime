@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
-import br.com.julianawl.anitime.ui.adapter.AnimesAdapter
+import br.com.julianawl.anitime.model.AnimeItem
+import br.com.julianawl.anitime.ui.adapter.AnimesLocaleAdapter
 import br.com.julianawl.anitime.ui.mylist.MyListViewModel
 import br.com.julianawl.anitime.ui.mylist.MyListViewModelFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_plan.*
 
 //item do tablayout
@@ -23,7 +25,7 @@ class PlanFragment : Fragment() {
 
     private val adapter by lazy {
         context?.let {
-            AnimesAdapter(context = it)
+            AnimesLocaleAdapter(context = it,)
         }
     }
 
@@ -53,6 +55,9 @@ class PlanFragment : Fragment() {
     private fun configuraPlan() {
         list_plan.adapter = adapter
         list_plan.layoutManager = LinearLayoutManager(context)
+        adapter?.onClickListener = {
+            deleteAnimesPlan(it)
+        }
     }
 
     //pega os items da lista salvos internamente
@@ -62,5 +67,20 @@ class PlanFragment : Fragment() {
                 adapter?.append(it)
             }
         })
+    }
+
+    private fun deleteAnimesPlan(anime: AnimeItem){
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Remove warning")
+            .setMessage("Do you really want to remove ${anime.title} from your list?")
+            .setPositiveButton("YES") { dialog, _ ->
+                viewModel.deleteAnimePlan(anime)
+                adapter?.deleteAnime(anime)
+                dialog.dismiss()
+            }
+            .setNeutralButton("NO") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+
     }
 }

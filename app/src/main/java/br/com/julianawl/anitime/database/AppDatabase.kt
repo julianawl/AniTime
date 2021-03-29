@@ -9,9 +9,8 @@ import br.com.julianawl.anitime.database.AnimeMigration.Companion.migration_2_3
 import br.com.julianawl.anitime.database.dao.AnimeDAO
 import br.com.julianawl.anitime.model.AnimeItem
 
-
+const val dbName = "anime-db"
 @Database(entities = [AnimeItem::class], version = 3, exportSchema = false)
-
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun animeDAO(): AnimeDAO
@@ -25,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "anime-db"
+                    dbName
                 ).addMigrations(migration_1_2, migration_2_3)
                     .build()
                 INSTANCE = instance

@@ -17,7 +17,6 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/SearchViewTheme"
             app:menu="@menu/top_app_bar_discover"
-            app:title="@string/anitime"
             app:titleTextColor="@color/anime_text" />
 
         <com.google.android.material.tabs.TabLayout

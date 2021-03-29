@@ -3,8 +3,8 @@ package br.com.julianawl.anitime.ui.discover
 import android.app.SearchManager
 import android.content.Context.SEARCH_SERVICE
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -15,17 +15,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeItem
+import br.com.julianawl.anitime.ui.INITIAL_PAGE_VALUE
 import br.com.julianawl.anitime.ui.LoadingDialog
+import br.com.julianawl.anitime.ui.QUERY_LENGTH
+import br.com.julianawl.anitime.ui.SEARCH_HINT
 import br.com.julianawl.anitime.ui.adapter.AnimesAdapter
 import com.google.android.material.appbar.MaterialToolbar
+import kotlinx.android.synthetic.main.custom_loading_dialog.*
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 class DiscoverFragment : Fragment() {
-
-    private val loadingDialog = LoadingDialog()
 
     private val viewModel: DiscoverViewModel by viewModels {
         DiscoverViewModelFactory((activity?.application as MyApplication).repository)
@@ -40,6 +43,9 @@ class DiscoverFragment : Fragment() {
     private val controller by lazy {
         findNavController()
     }
+
+    private lateinit var layoutManager: LinearLayoutManager
+    private var discoverPages = INITIAL_PAGE_VALUE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,15 +96,16 @@ class DiscoverFragment : Fragment() {
         val searchMenuItem = menu.findItem(R.id.search_anime)
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-        searchView.queryHint = "Search an anime..."
+        searchView.queryHint = SEARCH_HINT
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 configuraSearch(query)
+                progress_bar.visibility = View.VISIBLE
+                searchView.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                configuraSearch(newText)
                 return true
             }
         })
@@ -106,16 +113,17 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun configuraSearch(query: String?) {
-        if (query?.length!! > 3) {
+        if (query?.length!! > QUERY_LENGTH) {
             viewModel.getSearch(query)
             viewModel.mSearchResponse.observe(this@DiscoverFragment, {
                 if (it.isSuccessful) {
                     it.body()?.let { result ->
-                        adapter?.append(result.results)
+                        adapter?.appendSearch(result.results)
                     }
                 }
             })
         }
+        progress_bar.visibility = View.INVISIBLE
     }
 
     //define o adapter e a ação quando clica no anime
@@ -124,23 +132,43 @@ class DiscoverFragment : Fragment() {
             goToDetails(it)
         }
         discover_list.adapter = adapter
-        discover_list.layoutManager = LinearLayoutManager(context)
+        layoutManager = LinearLayoutManager(context)
+        discover_list.layoutManager = layoutManager
     }
 
     //chama os animes da lista discover
     private fun getAnimes() {
-        loadingDialog.show(requireContext())
-        viewModel.getAnimes()
+        viewModel.getAnimes(discoverPages)
         viewModel.mResponse.observe(this, {
             if (it.isSuccessful) {
                 it.body()?.let { animes ->
-                    adapter?.append(animes.animes)
-                    loadingDialog.dismissDialog()
+                    discover_list.post {
+                        adapter?.append(animes.animes)
+                        adapter?.notifyDataSetChanged()
+                    }
+                    setScrollListener()
                 }
-
             } else {
-                //definir ação para erro
-                Log.i("Response", it.errorBody().toString())
+                Toast.makeText(requireContext(), "The end", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun setScrollListener() {
+        discover_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
+
+                    if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                        discoverPages++
+                        discover_list.removeOnScrollListener(this)
+                        viewModel.getAnimes(discoverPages)
+                    }
+                }
             }
         })
     }
@@ -151,5 +179,4 @@ class DiscoverFragment : Fragment() {
             .actionNavigationDiscoverToDetails(anime)
         controller.navigate(direction)
     }
-
 }

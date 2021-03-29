@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 //classe pra receber a resposta da api do discover
 data class GetAnimesResponse(
-    @SerializedName("top") val animes: List<AnimeItem>
+    @SerializedName("top") val animes: MutableList<AnimeItem>
 )

@@ -1,24 +1,23 @@
 package br.com.julianawl.anitime.ui
 
-import android.app.Activity
-import android.app.AlertDialog
-import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import br.com.julianawl.anitime.R
-import br.com.julianawl.anitime.ui.activity.MainActivity
 
-class LoadingDialog {
+class LoadingDialog : DialogFragment() {
 
-    lateinit var dialog: AlertDialog
-
-    fun show(context:Context){
-        val builder = AlertDialog.Builder(context)
-        val inflater = (context as Activity).layoutInflater
-        builder.setView(inflater.inflate(R.layout.custom_loading_dialog, null))
-
-        dialog = builder.create()
-        dialog.show()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater
+            .inflate(R.layout.custom_loading_dialog,
+            container,
+            false)
     }
-     fun dismissDialog(){
-         dialog.dismiss()
-     }
+
 }

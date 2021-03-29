@@ -19,7 +19,6 @@ class AnimesAdapter(
     var onItemClickListener: (anime: AnimeItem) -> Unit = {}
 ) : RecyclerView.Adapter<AnimesAdapter.AnimeViewHolder>() {
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -37,11 +36,18 @@ class AnimesAdapter(
     override fun getItemCount(): Int = animes.size
 
     fun append(animes: List<AnimeItem>) {
+        this.animes.addAll(animes)
+        notifyItemRangeInserted(
+            this.animes.size,
+            animes.size - 1
+        )
+    }
+
+    fun appendSearch(animes: List<AnimeItem>){
         this.animes.clear()
         this.animes.addAll(animes)
         notifyDataSetChanged()
     }
-
 
     inner class AnimeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var anime: AnimeItem
@@ -69,7 +75,7 @@ class AnimesAdapter(
 
         init {
             itemView.setOnClickListener {
-                if(::anime.isInitialized){
+                if (::anime.isInitialized) {
                     onItemClickListener(anime)
                 }
             }
@@ -110,5 +116,4 @@ class AnimesAdapter(
             }
         }
     }
-
 }

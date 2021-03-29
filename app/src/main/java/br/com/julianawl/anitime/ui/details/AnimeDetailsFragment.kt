@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
 import br.com.julianawl.anitime.model.AnimeDetails
+import br.com.julianawl.anitime.ui.*
 import br.com.julianawl.anitime.ui.adapter.extensions.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -24,8 +24,8 @@ import retrofit2.Response
 
 class AnimeDetailsFragment : Fragment() {
 
-    var index = 0
-    private val lists = arrayOf("Complete", "Plan to watch")
+    var index = INITIAL_INDEX
+    private val lists = arrayOf(COMPLETE, PLAN_TO_WATCH)
 
     private val argument by navArgs<AnimeDetailsFragmentArgs>()
 
@@ -45,7 +45,6 @@ class AnimeDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(
             R.layout.fragment_anime_details,
             container,
@@ -55,7 +54,6 @@ class AnimeDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         configuraAppBar(view)
         configuraDetails()
     }
@@ -65,24 +63,31 @@ class AnimeDetailsFragment : Fragment() {
         viewModel.getDetails(anime.id)
         viewModel.mResponse.observe(viewLifecycleOwner, {
             if (it.isSuccessful) {
-                topAppBar.title = it.body()?.title
                 anime_details_type.text = it.body()?.type
-                anime_details_episodes.text = it.body()?.episodes.toString()
+                configuraEpisodes(it)
                 configuraStudio(it)
                 anime_details_date.text = it.body()?.date?.completeDate
                 anime_details_synopsis.text = it.body()?.synopsis
                 configuraScore(it)
                 configuraPoster(it)
             }
-
         })
+    }
+
+    private fun configuraEpisodes(animeDetails: Response<AnimeDetails>) {
+        anime_details_episodes.text = animeDetails.body()?.let {
+            response ->
+            response.episodes.let {
+                it?.toString() ?: "?"
+            }
+        }
     }
 
     private fun configuraStudio(animeDetails: Response<AnimeDetails>) {
         anime_details_studio.text = animeDetails.body()?.let { response ->
             response.studio.let { studioList ->
                 if (studioList.isEmpty()) {
-                    "-"
+                    EMPTY_ITEM
                 } else {
                     studioList[0].studioName
                 }
@@ -107,7 +112,7 @@ class AnimeDetailsFragment : Fragment() {
         val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
-
+        topAppBar.title = anime.title
         topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.add_anime -> {
@@ -123,28 +128,31 @@ class AnimeDetailsFragment : Fragment() {
     private fun configuraDialogAddAnime() {
         var selectItem = lists[index]
 
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Theme)
             .setTitle(R.string.add_anime)
             .setSingleChoiceItems(lists, index) { _, which ->
                 index = which
                 selectItem = lists[which]
             }
-            .setPositiveButton("SAVE") { dialog, _ ->
+            .setPositiveButton(SAVE) { dialog, _ ->
                 if (selectItem == lists[0]) {
                     addAnimeComplete()
-                    Toast.makeText(requireContext(),
-                        "Anime added in complete list successfully",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        ADD_ANIME_MESSAGE_COMPLETE,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     addAnimePTW()
-                    Toast.makeText(requireContext(),
-                        "Anime added in plan to watch list successfully",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        ADD_ANIME_MESSAGE_PTW,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                findNavController().navigate(R.id.navigation_discover)
                 dialog.dismiss()
             }
-            .setNeutralButton("CANCEL") { dialog, _ ->
+            .setNeutralButton(CANCEL) { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }

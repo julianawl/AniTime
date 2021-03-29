@@ -7,15 +7,11 @@
         <item name="colorOnPrimary">@color/anime_black</item>
         <item name="colorPrimaryDark">@color/anime_red_dark</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
+        <item name="android:statusBarColor" tools:targetApi="p">?attr/colorPrimaryDark</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/anime_black_dark</item>
         <item name="android:textColorSecondary">@color/anime_text</item>
-        <!-- cor do texto do material dialog -->
-        <item name="colorOnSurface">@color/anime_black</item>
-        <!-- cor do radio button -->
-        <item name="colorSecondary">@color/anime_red</item>
-
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
@@ -26,5 +22,52 @@
         <!-- cor da linha e ícones -->
         <item name="android:textColorSecondary">@color/anime_search_white</item>
         <item name="colorControlActivated">@color/anime_search_white</item>
+    </style>
+
+    <style name="AppBarTitle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:fontFamily">@font/japanese</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="MaterialAlertDialog_Theme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <!-- cor do texto do material dialog -->
+        <item name="colorOnSurface">@color/anime_text</item>
+        <!-- cor do radio button -->
+        <item name="colorSecondary">@color/anime_red</item>
+        <item name="android:background">@color/anime_black_dark</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/anime_text</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Button</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Button" parent="">
+        <item name="colorPrimary">@color/anime_text</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
     </style>
 </resources>

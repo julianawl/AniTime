@@ -16,9 +16,9 @@ class DiscoverViewModel(
     val mResponse: MutableLiveData<Response<GetAnimesResponse>> = MutableLiveData()
     val mSearchResponse: MutableLiveData<Response<GetSearchResponse>> = MutableLiveData()
 
-    fun getAnimes() {
+    fun getAnimes(page: Int) {
         viewModelScope.launch {
-            val response = repository.getTopAnimesAiring()
+            val response = repository.getTopAnimesAiring(page)
             mResponse.value = response
         }
     }

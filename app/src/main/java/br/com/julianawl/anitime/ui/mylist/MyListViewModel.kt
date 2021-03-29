@@ -26,4 +26,16 @@ class MyListViewModel(private val repository: AnimesRepository) : ViewModel() {
             repository.deletePTWList(anime)
         }
     }
+
+    fun saveCompleteList(anime: AnimeItem) {
+        viewModelScope.launch {
+            repository.saveCompleteList(anime)
+        }
+    }
+
+    fun savePTWList(anime: AnimeItem) {
+        viewModelScope.launch {
+            repository.savePTWList(anime)
+        }
+    }
 }

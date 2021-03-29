@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 //classe para receber a resposta da api da pesquisa
 data class GetSearchResponse(
-    @SerializedName("results") val results: List<AnimeItem>
+    @SerializedName("results") val results: MutableList<AnimeItem>
 )

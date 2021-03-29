@@ -1,7 +1,6 @@
 package br.com.julianawl.anitime.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,8 @@ import kotlinx.android.synthetic.main.item_list_local.view.*
 class AnimesLocaleAdapter(
     private val context: Context,
     private val animes: MutableList<AnimeItem> = mutableListOf(),
-    var onClickListener: (anime: AnimeItem) -> Unit = {}
+    var onClickDelete: (anime: AnimeItem) -> Unit = {},
+    var onClickEdit: (anime: AnimeItem) -> Unit = {}
 ) : RecyclerView.Adapter<AnimesLocaleViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -42,7 +42,7 @@ class AnimesLocaleAdapter(
     }
 
     fun deleteAnime(anime: AnimeItem){
-        this.animes.removeAt(animes.indexOf(anime))
+        this.animes.remove(anime)
         notifyItemRemoved(animes.indexOf(anime))
     }
 
@@ -57,13 +57,26 @@ class AnimesLocaleAdapter(
         private val animeDelete by lazy {
             itemView.anime_delete
         }
+        private val animeEdit by lazy {
+            itemView.anime_edit
+        }
 
         init {
             animeDelete?.let {
                 it.setOnClickListener {
                     if(::anime.isInitialized){
-                        onClickListener(anime)
+                        onClickDelete(anime)
 
+                    }
+                }
+            }
+        }
+
+        init {
+            animeEdit?.let {
+                it.setOnClickListener {
+                    if(::anime.isInitialized){
+                        onClickEdit(anime)
                     }
                 }
             }

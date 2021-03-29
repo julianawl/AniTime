@@ -11,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import br.com.julianawl.anitime.R
+import br.com.julianawl.anitime.ui.COMPLETE
+import br.com.julianawl.anitime.ui.PLAN_TO_WATCH
 import br.com.julianawl.anitime.ui.adapter.ViewPagerAdapter
 import br.com.julianawl.anitime.ui.mylist.tabs.CompleteFragment
 import br.com.julianawl.anitime.ui.mylist.tabs.PlanFragment
@@ -57,8 +59,8 @@ class MyListFragment : Fragment() {
     //configura o tablayout
     private fun setupTabs() {
         val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager)
-        adapter.addFragment(CompleteFragment(), "Complete")
-        adapter.addFragment(PlanFragment(), "Plan to watch")
+        adapter.addFragment(CompleteFragment(), COMPLETE)
+        adapter.addFragment(PlanFragment(), PLAN_TO_WATCH)
 
         view_pager.adapter = adapter
         tab_layout.setupWithViewPager(view_pager)

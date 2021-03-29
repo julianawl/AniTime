@@ -19,15 +19,15 @@ class AnimesRepository(
     val allPTWAnimes: Flow<List<AnimeItem>> = dao.buscaPTW()
 
     //pega todos os animes que estão lançando (discover)
-    suspend fun getTopAnimesAiring()
+    suspend fun getTopAnimesAiring(page: Int)
             : Response<GetAnimesResponse> {
-        return api.getDiscover()
+        return api.getDiscover(page)
     }
 
     //pega os animes de acordo com a busca feita (discover)
     suspend fun getAnimesSearch(keyword: String)
-            : Response<GetSearchResponse> {
-        return api.getAnimesSearch(keyword)
+                : Response<GetSearchResponse> {
+            return api.getAnimesSearch(keyword)
     }
 
     //mostra os detalhes do anime selecionado (details)

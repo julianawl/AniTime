@@ -11,8 +11,8 @@ import retrofit2.http.Query
 //endpoints da api
 interface Api {
 
-    @GET("top/anime/1/airing")
-    suspend fun getDiscover()
+    @GET("top/anime/{page}/airing")
+    suspend fun getDiscover(@Path("page") page: Int)
             : Response<GetAnimesResponse>
 
     @GET("anime/{id}/")
@@ -20,7 +20,8 @@ interface Api {
             : Response<AnimeDetails>
 
     @GET("search/anime")
-    suspend fun getAnimesSearch(@Query("q") keyword: String)
-            : Response<GetSearchResponse>
+    suspend fun getAnimesSearch(
+        @Query("q") keyword: String
+    ): Response<GetSearchResponse>
 
 }

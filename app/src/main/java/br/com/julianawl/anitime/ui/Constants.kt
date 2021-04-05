@@ -11,5 +11,4 @@ const val YES = "YES"
 const val NO = "NO"
 const val SEARCH_HINT = "Search an anime..."
 const val QUERY_LENGTH = 3
-const val INITIAL_PAGE_VALUE = 1
 const val INITIAL_INDEX = 0

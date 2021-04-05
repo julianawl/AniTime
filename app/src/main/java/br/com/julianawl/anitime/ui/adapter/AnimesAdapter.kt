@@ -10,6 +10,7 @@ import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.ui.adapter.extensions.ratingBarFormat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import kotlinx.android.synthetic.main.fragment_anime_details.view.*
 import kotlinx.android.synthetic.main.item_list_discover.view.*
 
 //adapter dos recyclerviews

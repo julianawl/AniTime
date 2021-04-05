@@ -75,8 +75,7 @@ class AnimeDetailsFragment : Fragment() {
     }
 
     private fun configuraEpisodes(animeDetails: Response<AnimeDetails>) {
-        anime_details_episodes.text = animeDetails.body()?.let {
-            response ->
+        anime_details_episodes.text = animeDetails.body()?.let { response ->
             response.episodes.let {
                 it?.toString() ?: "?"
             }

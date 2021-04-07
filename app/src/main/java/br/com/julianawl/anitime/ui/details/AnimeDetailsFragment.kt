@@ -28,10 +28,10 @@ class AnimeDetailsFragment : Fragment() {
     private val lists = arrayOf(COMPLETE, PLAN_TO_WATCH)
 
     private val argument by navArgs<AnimeDetailsFragmentArgs>()
-
     private val anime by lazy {
         argument.anime
     }
+//    private lateinit var animeDetails: AnimeDetails
 
     private val viewModel: AnimeDetailsViewModel by viewModels {
         AnimeDetailsViewModelFactory(
@@ -54,8 +54,28 @@ class AnimeDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         configuraAppBar(view)
         configuraDetails()
+    }
+
+    //configura as ações presentes na toolbar
+    private fun configuraAppBar(view: View) {
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
+        val navHostFragment = NavHostFragment.findNavController(this)
+
+        NavigationUI.setupWithNavController(toolbar, navHostFragment)
+
+        topAppBar.title = anime.title
+        topAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.add_anime -> {
+                    configuraDialogAddAnime()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     //configura as informações que aparecerão na tela
@@ -63,6 +83,7 @@ class AnimeDetailsFragment : Fragment() {
         viewModel.getDetails(anime.id)
         viewModel.mResponse.observe(viewLifecycleOwner, {
             if (it.isSuccessful) {
+//                animeDetails = it.body()!!
                 anime_details_type.text = it.body()?.type
                 configuraEpisodes(it)
                 configuraStudio(it)
@@ -95,8 +116,8 @@ class AnimeDetailsFragment : Fragment() {
     }
 
     private fun configuraScore(animeDetails: Response<AnimeDetails>) {
-        val score = animeDetails.body()!!.score
-        ratingBarFormat(anime_details_star_score, score)
+        val score = animeDetails.body()?.score
+        ratingBarFormat(anime_details_star_score, score!!)
     }
 
     private fun configuraPoster(animeDetails: Response<AnimeDetails>) {
@@ -104,23 +125,6 @@ class AnimeDetailsFragment : Fragment() {
             .load(animeDetails.body()?.imageUrl)
             .transform(CenterCrop())
             .into(anime_details_poster)
-    }
-
-    //configura as ações presentes na toolbar
-    private fun configuraAppBar(view: View) {
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
-        val navHostFragment = NavHostFragment.findNavController(this)
-        NavigationUI.setupWithNavController(toolbar, navHostFragment)
-        topAppBar.title = anime.title
-        topAppBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.add_anime -> {
-                    configuraDialogAddAnime()
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     //configura dialog de adição do anime em uma lista
@@ -136,18 +140,8 @@ class AnimeDetailsFragment : Fragment() {
             .setPositiveButton(SAVE) { dialog, _ ->
                 if (selectItem == lists[0]) {
                     addAnimeComplete()
-                    Toast.makeText(
-                        requireContext(),
-                        ADD_ANIME_MESSAGE_COMPLETE,
-                        Toast.LENGTH_SHORT
-                    ).show()
                 } else {
                     addAnimePTW()
-                    Toast.makeText(
-                        requireContext(),
-                        ADD_ANIME_MESSAGE_PTW,
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
                 dialog.dismiss()
             }
@@ -159,10 +153,20 @@ class AnimeDetailsFragment : Fragment() {
     private fun addAnimePTW() {
         //verificar se anime já está na lista ou se está na outra lista
         viewModel.savePTWList(anime)
+        Toast.makeText(
+            requireContext(),
+            ADD_ANIME_MESSAGE_COMPLETE,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun addAnimeComplete() {
         //verificar se anime já está na lista ou se está na outra lista
         viewModel.saveCompleteList(anime)
+        Toast.makeText(
+            requireContext(),
+            ADD_ANIME_MESSAGE_PTW,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

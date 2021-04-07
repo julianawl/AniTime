@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.julianawl.anitime.MyApplication
 import br.com.julianawl.anitime.R
+import br.com.julianawl.anitime.model.AnimeDetails
 import br.com.julianawl.anitime.model.AnimeItem
 import br.com.julianawl.anitime.ui.NO
 import br.com.julianawl.anitime.ui.YES

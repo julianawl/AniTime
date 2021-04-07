@@ -41,12 +41,12 @@ class AnimesLocaleAdapter(
         notifyDataSetChanged()
     }
 
-    fun deleteAnime(anime: AnimeItem){
+    fun deleteAnime(anime: AnimeItem) {
         this.animes.remove(anime)
         notifyItemRemoved(animes.indexOf(anime))
     }
 
-    inner class AnimesLocaleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class AnimesLocaleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var anime: AnimeItem
         private val animeName by lazy {
             itemView.anime_name
@@ -64,7 +64,7 @@ class AnimesLocaleAdapter(
         init {
             animeDelete?.let {
                 it.setOnClickListener {
-                    if(::anime.isInitialized){
+                    if (::anime.isInitialized) {
                         onClickDelete(anime)
 
                     }
@@ -75,7 +75,7 @@ class AnimesLocaleAdapter(
         init {
             animeEdit?.let {
                 it.setOnClickListener {
-                    if(::anime.isInitialized){
+                    if (::anime.isInitialized) {
                         onClickEdit(anime)
                     }
                 }

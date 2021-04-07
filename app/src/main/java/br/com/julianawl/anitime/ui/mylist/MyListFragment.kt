@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -18,7 +17,6 @@ import br.com.julianawl.anitime.ui.mylist.tabs.CompleteFragment
 import br.com.julianawl.anitime.ui.mylist.tabs.PlanFragment
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.android.synthetic.main.fragment_mylist.*
-
 
 class MyListFragment : Fragment() {
 
@@ -51,9 +49,9 @@ class MyListFragment : Fragment() {
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        toolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigateUp()
-        }
+//        toolbar.setNavigationOnClickListener { view ->
+//            view.findNavController().navigateUp()
+//        }
     }
 
     //configura o tablayout

@@ -28,15 +28,14 @@
         android:layout_height="80dp"
         android:background="@color/anime_black"
         android:clickable="true"
-        android:cropToPadding="false"
         android:focusable="true"
-        android:src="@drawable/placeholder"
+        tools:src="@drawable/placeholder"
         app:layout_constraintBottom_toTopOf="@id/user_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.138"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:layout_constraintVertical_bias="0.81"
         app:shapeAppearanceOverlay="@style/Circular" />
 
